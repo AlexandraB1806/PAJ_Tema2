@@ -3,10 +3,11 @@ package com.luxoft.bankapp.employees;
 
 public abstract class AbstractSpecialist extends BankEmployee {
 	
-	private static final double OTHER_COMISSION = 0.005;
-	private static final double PROPERTY_GUARANTEE_COMISSION = 0.002;
+	private static final double OTHER_COMMISSION = 0.005;
+	private static final double PROPERTY_GUARANTEE_COMMISSION = 0.002;
+
 	//next element in chain or responsibility 
-	protected AbstractSpecialist nextSpecialist; 
+	private AbstractSpecialist nextSpecialist;
 	
 	public void setNextSpecialist(AbstractSpecialist nextSpecialist){ 
 		this.nextSpecialist = nextSpecialist; 
@@ -20,16 +21,21 @@ public abstract class AbstractSpecialist extends BankEmployee {
 		}
 	}
 	
-	public static double calculateAnalysisComission(double amount, boolean propertyGuarantee) {
-		double comission;
+	public static double calculateAnalysisCommission(double amount, boolean propertyGuarantee) {
+		double commission;
+
 	    if (propertyGuarantee) {
-	       comission = amount * PROPERTY_GUARANTEE_COMISSION;
+	       commission = amount * PROPERTY_GUARANTEE_COMMISSION;
+	    } else {
+	       commission = amount * OTHER_COMMISSION;
 	    }
-	    else {
-	       comission = amount * OTHER_COMISSION;
-	    }
-	    return comission;
+
+	    return commission;
 	}
 	
 	abstract public boolean makeDecision(double amount, double creditRate, double clientSalary, boolean propertyGuarantee);
+
+	public AbstractSpecialist getNextSpecialist() {
+		return nextSpecialist;
+	}
 }

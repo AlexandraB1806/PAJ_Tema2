@@ -10,6 +10,8 @@ public class AccountCache {
 
 	private static final Map<String, AbstractAccount> cache = new HashMap<>();
 
+	private AccountCache() {}
+
 	public static void loadCache() {
 		SavingAccount savingAccount = new SavingAccount(0, 0.0);
 		cache.put(SAVING, savingAccount);

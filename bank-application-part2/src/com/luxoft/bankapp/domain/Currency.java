@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Currency implements Serializable {
 	private static final long serialVersionUID = 64023495560719474L;
+
 	private String code;
 	private String country;
 

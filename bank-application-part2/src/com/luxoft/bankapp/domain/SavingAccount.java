@@ -9,17 +9,21 @@ import com.luxoft.bankapp.utils.Params;
 public class SavingAccount extends AbstractAccount {
 
 	private static final long serialVersionUID = 9200460687227050240L;
+
 	private Currency currency;
 
 	public SavingAccount(int id, double amount) {
 		super(id, amount);
-		this.setType(AbstractAccount.SAVING_ACCOUNT_TYPE);
 	}
-	
+
+	@Override
+	public double maximumAmountToWithdraw() {
+		return this.getBalance();
+	}
+
 	public SavingAccount(int id, double amount, Currency currency) {
 		super(id, amount);
 		this.currency = currency;
-		this.setType(AbstractAccount.SAVING_ACCOUNT_TYPE);
 	}
 	
 	public Currency getCurrency() {
@@ -29,7 +33,7 @@ public class SavingAccount extends AbstractAccount {
 	@Override
 	public String toString() {
 		Formatter fmt = new Formatter(Locale.US);
-		String stringAccount = fmt.format("Saving account %d, balance: %.2f", getId(), balance).toString(); 
+		String stringAccount = fmt.format("Saving account %d, balance: %.2f", getId(), getBalance()).toString();
 		fmt.close();
 		return stringAccount;
 	}

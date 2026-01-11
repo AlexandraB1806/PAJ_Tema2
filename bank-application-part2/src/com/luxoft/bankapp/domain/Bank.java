@@ -18,17 +18,18 @@ import com.luxoft.bankapp.utils.ClientRegistrationListener;
 public class Bank implements Serializable {
 	
 	private static final long serialVersionUID = -4157871135257285214L;
+
 	private final Set<Client> clients = new HashSet<Client>();
 	private final ArrayList<ClientRegistrationListener> listeners = new ArrayList<ClientRegistrationListener>();
 	private EmailService emailService;
 
-	private Client admin = new Client("Admin", Gender.MALE);
+	private final Client admin = new Client("Admin", Gender.MALE);
 	
-	private Client system = new Client("System", Gender.MALE);
-	
-	private int printedClients = 0;
-	private int emailedClients = 0;
-	private int debuggedClients = 0;
+	private final Client system = new Client("System", Gender.MALE);
+
+	private final int printedClients = 0;
+	private final int emailedClients = 0;
+	private final int debuggedClients = 0;
 	
 	public Bank() {
 		listeners.add(new PrintClientListener());

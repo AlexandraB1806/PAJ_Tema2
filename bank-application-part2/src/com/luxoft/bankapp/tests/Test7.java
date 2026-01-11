@@ -3,11 +3,7 @@ package com.luxoft.bankapp.tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
+import java.util.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -59,7 +55,7 @@ public class Test7 {
 	
 	@Test
 	public void testCustomerAccounts() {
-		Map<Client, Collection<Account>>  customerAccounts = bankReport.getCustomerAccounts();
+		Map<Client, Set<Account>>  customerAccounts = bankReport.getCustomerAccounts();
 		
 		assertEquals(10, customerAccounts.size());
 		assertEquals("Saving account 4, balance: 487.72", customerAccounts.get(new Client(("Brian"), Gender.MALE)).iterator().next().toString());
@@ -67,7 +63,7 @@ public class Test7 {
 	
 	@Test
 	public void testClientsByCity() {
-		Map<String, ArrayList<Client>> clientsByCity = bankReport.getClientsByCity();
+		Map<String, List<Client>> clientsByCity = bankReport.getClientsByCity();
 		
 		assertEquals(2, clientsByCity.get("New York").size());
 		assertEquals(8, clientsByCity.get("Boston").size());

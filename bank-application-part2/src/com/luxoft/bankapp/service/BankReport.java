@@ -1,7 +1,6 @@
 package com.luxoft.bankapp.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,22 +11,10 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import com.luxoft.bankapp.domain.Account;
-import com.luxoft.bankapp.domain.Bank;
-import com.luxoft.bankapp.domain.CheckingAccount;
-import com.luxoft.bankapp.domain.Client;
+import com.luxoft.bankapp.domain.*;
 
-public class BankReport {
+public record BankReport(Bank bank) {
 
-	private Bank bank;
-
-	public BankReport(Bank bank) {
-		this.bank = bank;
-	}
-
-	public Bank getBank() {
-		return bank;
-	}
 
 	/* Returns the number of bank clients */
 	public int getNumberOfClients() {
@@ -36,7 +23,8 @@ public class BankReport {
 
 	/* Returns the total number of accounts for all bank clients */
 	public int getNumberOfAccounts() {
-		Set accounts = new HashSet();
+		Set<Account> accounts = new HashSet<>();
+
 		for (Client client : bank.getClients())
 			accounts.addAll(client.getAccounts());
 		return accounts.size();
@@ -44,7 +32,7 @@ public class BankReport {
 
 	/* Returns the set of clients in alphabetical order */
 	public SortedSet<Client> getClientsSorted() {
-		SortedSet clients = new TreeSet(new Comparator<Client>() {
+		SortedSet<Client> clients = new TreeSet(new Comparator<Client>() {
 			@Override
 			public int compare(Client client1, Client client2) {
 				if (client1.getName() == null) {
@@ -60,7 +48,8 @@ public class BankReport {
 	/* Returns the total sum (balance) from the accounts of all bank clients */
 	public double getTotalSumInAccounts() {
 		double sum = 0.0;
-		Set accounts = new HashSet();
+		Set<Account> accounts = new HashSet<>();
+
 		for (Client client : bank.getClients())
 			accounts.addAll(client.getAccounts());
 		for (Object account : accounts) {
@@ -91,7 +80,8 @@ public class BankReport {
 	 */
 	public double getBankCreditSum() {
 		double result = 0.0;
-		Set accounts = new HashSet();
+		Set<Account> accounts = new HashSet<>();
+
 		for (Client client : bank.getClients())
 			accounts.addAll(client.getAccounts());
 		for (Object account : accounts)
@@ -105,8 +95,9 @@ public class BankReport {
 	}
 
 	/* Returns a map of client accounts */
-	public Map getCustomerAccounts() {
-		Map result = new HashMap();
+	public Map<Client, Set<Account>> getCustomerAccounts() {
+		Map<Client, Set<Account>> result = new HashMap<>();
+
 		for (Client client : bank.getClients()) {
 			result.put(client, client.getAccounts());
 		}
@@ -114,17 +105,18 @@ public class BankReport {
 	}
 
 	/* Returns a map of cities and clients */
-	public Map<String, ArrayList<Client>> getClientsByCity() {
-		Set sortedClients = bank.getClients();
-		Map clientCities = new TreeMap();
-		for (Object client : sortedClients) {
-			String city = ((Client)client).getCity();
+	public Map<String, List<Client>> getClientsByCity() {
+		Set<Client> sortedClients = bank.getClients();
+		Map<String, List<Client>> clientCities = new TreeMap<>();
+		for (Client client : sortedClients) {
+			String city = client.getCity();
 			if (!clientCities.containsKey(city)) {
-				List clientsNotYetInMap = new ArrayList();
+				List<Client> clientsNotYetInMap = new ArrayList<>();
+
 				clientsNotYetInMap.add(client);
 				clientCities.put(city, clientsNotYetInMap);
 			} else {
-				((List)clientCities.get(city)).add(client);
+				clientCities.get(city).add(client);
 			}
 		}
 		return clientCities;

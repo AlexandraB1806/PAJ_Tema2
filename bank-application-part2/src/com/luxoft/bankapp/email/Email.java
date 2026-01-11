@@ -9,6 +9,7 @@ import com.luxoft.bankapp.domain.Client;
 public class Email implements Serializable {
 
 	private static final long serialVersionUID = -3686472195559526951L;
+
 	private Client from;
     private ArrayList<Client> to, copy;
     private String title, body;

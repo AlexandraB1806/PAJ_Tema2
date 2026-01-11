@@ -10,7 +10,7 @@ import com.luxoft.bankapp.domain.Client;
 import com.luxoft.bankapp.exceptions.ClientExistsException;
 
 public class BankDataLoaderService {
-	private Bank bank;
+	private final Bank bank;
 	
     public BankDataLoaderService(Bank bank) {
 		this.bank = bank;

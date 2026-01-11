@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class EmailService implements Runnable, Serializable {
 	
 	private static final long serialVersionUID = -6872857384878095572L;
-	private Queue queue = new Queue();
+
+	private final Queue queue = new Queue();
 	private boolean closed;
     private int sentEmails = 0;
     

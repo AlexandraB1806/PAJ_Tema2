@@ -10,6 +10,7 @@ import com.luxoft.bankapp.utils.Params;
 public class CheckingAccount extends AbstractAccount {
 	
 	private static final long serialVersionUID = 7922392307762434334L;
+
 	private double overdraft;
 	private Currency currency;
 
@@ -19,7 +20,6 @@ public class CheckingAccount extends AbstractAccount {
 			throw new IllegalArgumentException("Cannot create an account with a starting negative overdraft");
 		}
 		this.overdraft = overdraft;
-		this.setType(AbstractAccount.CHECKING_ACCOUNT_TYPE);
 	}
 	
 	public CheckingAccount(int id, double amount, double overdraft, Currency currency) {
@@ -29,7 +29,6 @@ public class CheckingAccount extends AbstractAccount {
 		}
 		this.overdraft = overdraft;
 		this.currency = currency;
-		this.setType(AbstractAccount.CHECKING_ACCOUNT_TYPE);
 	}
 	
 	public Currency getCurrency() {
@@ -57,9 +56,14 @@ public class CheckingAccount extends AbstractAccount {
     }
 
 	@Override
+	public double maximumAmountToWithdraw() {
+		return this.getBalance() + this.getOverdraft();
+	}
+
+	@Override
 	public String toString() {
 		Formatter fmt = new Formatter(Locale.US);
-		String stringAccount = fmt.format("Checking account %d, balance: %.2f, overdraft: %.2f", getId(), balance, overdraft).toString(); 
+		String stringAccount = fmt.format("Checking account %d, balance: %.2f, overdraft: %.2f", getId(), getBalance(), overdraft).toString();
 		fmt.close();
 		return stringAccount;
 	}

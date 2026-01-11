@@ -12,8 +12,9 @@ import com.luxoft.bankapp.utils.Params;
 public class Client implements Serializable {
 		
 	private static final long serialVersionUID = -6343841891631428291L;
-	private String name;
-	private Gender gender;
+
+	private final String name;
+	private final Gender gender;
 	private String phoneAreaCode;
 	private String phoneNumber;
 	
@@ -129,12 +130,9 @@ public class Client implements Serializable {
 		if (gender != other.gender)
 			return false;
 		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
-	}
+            return other.name == null;
+		} else return name.equals(other.name);
+    }
 	
 	public static Client parseClient(String str){
 		Params params = new Params(str.split(";"));

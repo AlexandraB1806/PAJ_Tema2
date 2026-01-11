@@ -77,7 +77,6 @@ public class AccountCacheTest {
 
         assertEquals(prototype.getId(), cloned.getId());
         assertEquals(prototype.getBalance(), cloned.getBalance(), 0.0);
-        assertEquals(prototype.getType(), cloned.getType());
     }
 
     @Test
@@ -87,7 +86,6 @@ public class AccountCacheTest {
 
         assertEquals(prototype.getId(), cloned.getId());
         assertEquals(prototype.getBalance(), cloned.getBalance(), 0.0);
-        assertEquals(prototype.getType(), cloned.getType());
         assertEquals(((CheckingAccount) prototype).getOverdraft(), ((CheckingAccount) cloned).getOverdraft(), 0.0);
     }
 

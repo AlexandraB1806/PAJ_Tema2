@@ -85,12 +85,10 @@ public class BankService {
         							serializationFileName));
             bank = (Bank) ois.readObject();
             ois.close();
-        } catch (ClassNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e){
+        } catch (ClassNotFoundException | IOException e){
             e.printStackTrace();
         }
-        
+
         return bank;
     }
 	
