@@ -32,9 +32,33 @@ public class Bank implements Serializable {
 	private final int debuggedClients = 0;
 	
 	public Bank() {
-		listeners.add(new PrintClientListener());
-		listeners.add(new EmailNotificationListener());
-		listeners.add(new DebugListener());
+		// PrintClientListener as lambda
+		listeners.add(client -> System.out.println("Client added: " + client.getName()));
+
+		// EmailNotificationListener as lambda
+		listeners.add(client -> {
+			System.out.println("Notification email for client " + client.getName() + " to be sent");
+
+			if (emailService != null) {
+				try {
+					emailService.sendNotificationEmail(
+							new Email()
+									.setFrom(system)
+									.setTo(admin)
+									.setCopy(client)
+									.setTitle("Client Added Notification")
+									.setBody("Client added: " + client)
+					);
+				} catch (EmailException e) {
+					System.err.println(e.getMessage());
+				}
+			}
+		});
+
+		// DebugListener as lambda
+		listeners.add(client -> System.out.println("Client " + client.getName() + " added on: " +
+				DateFormat.getDateInstance(DateFormat.FULL).format(new Date())));
+
 		admin.setCity("New York");
 		admin.setPhoneAreaCode("0123");
 		admin.setPhoneNumber("9876543");
@@ -42,8 +66,6 @@ public class Bank implements Serializable {
 		system.setCity("Boston");
 		system.setPhoneAreaCode("0121");
 		system.setPhoneNumber("9875043");
-		
-		
 	}
 	
 	public void setEmailService(EmailService emailService) {
@@ -87,51 +109,4 @@ public class Bank implements Serializable {
                 return client;
         return null;
     }
-	
-	class PrintClientListener implements ClientRegistrationListener, Serializable {
-		private static final long serialVersionUID = 2777987742204604236L;
-
-		@Override 
-		public void onClientAdded(Client client) {
-	        System.out.println("Client added: " + client.getName());
-	    }
-
-	}
-	
-	class EmailNotificationListener implements ClientRegistrationListener, Serializable {
-		private static final long serialVersionUID = -2360873324733537279L;
-
-		@Override 
-		public void onClientAdded(Client client) {
-	        System.out.println("Notification email for client " + client.getName() + " to be sent");
-	        
-	        if(emailService != null) {
-		        try {
-		        	emailService.sendNotificationEmail(
-	                        new Email()
-	                                .setFrom(system)
-	                                .setTo(admin)
-	                                .setCopy(client)
-	                                .setTitle("Client Added Notification")
-	                                .setBody("Client added: " + client)
-	                );
-	            } catch (EmailException e) {
-	                System.err.println(e.getMessage());
-	            }
-	        }
-	    }
-	}
-	
-	class DebugListener implements ClientRegistrationListener, Serializable {
-		private static final long serialVersionUID = -7600469994081192859L;
-
-		@Override public void onClientAdded(Client client) {
-            System.out.println("Client " + client.getName() + " added on: " + DateFormat.getDateInstance(DateFormat.FULL).format(new Date()));
-        }
-    }
-
 }
-
-
-
-
