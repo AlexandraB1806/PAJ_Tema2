@@ -107,7 +107,7 @@ public class TestAccountFactory {
 		
 		Account checkingAccount = AccountFactory.createAccount(
 				AbstractAccount.CHECKING_ACCOUNT_TYPE, 8, 6000.0, 250.0, currency);
-
+		
 		assertTrue(checkingAccount instanceof CheckingAccount);
 		assertEquals(currency, ((CheckingAccount) checkingAccount).getCurrency());
 		assertEquals(250.0, ((CheckingAccount) checkingAccount).getOverdraft(), 0.0);

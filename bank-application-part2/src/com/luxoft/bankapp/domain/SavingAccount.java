@@ -45,4 +45,16 @@ public class SavingAccount extends AbstractAccount {
         		new Currency(currency));
     }
 	
+	@Override
+	public SavingAccount clone() {
+		SavingAccount clone = (SavingAccount) super.clone();
+
+		if (this.currency != null) {
+			clone.currency = new Currency(this.currency.getCode());
+			clone.currency.setCountry(this.currency.getCountry());
+		}
+
+		return clone;
+	}
+	
 }

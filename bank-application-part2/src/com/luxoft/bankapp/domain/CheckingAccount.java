@@ -40,6 +40,13 @@ public class CheckingAccount extends AbstractAccount {
 		return overdraft;
 	}
 	
+	public void setOverdraft(double overdraft) {
+		if (overdraft < 0) {
+			throw new IllegalArgumentException("Cannot set a negative overdraft");
+		}
+		this.overdraft = overdraft;
+	}
+	
 	@Override
     public void withdraw(double value) throws OverdraftLimitExceededException {
         try {
@@ -68,4 +75,16 @@ public class CheckingAccount extends AbstractAccount {
                 Double.parseDouble(overdraft),
                 new Currency(currency));
     }
+
+	@Override
+	public CheckingAccount clone() {
+		CheckingAccount clone = (CheckingAccount) super.clone();
+
+		if (this.currency != null) {
+			clone.currency = new Currency(this.currency.getCode());
+			clone.currency.setCountry(this.currency.getCountry());
+		}
+
+		return clone;
+	}
 }
